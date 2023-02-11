@@ -11,3 +11,6 @@
 2. **PHP** dengan framework **CodeIgniter 3 (3.1.13)**
 3. Basis data **MySQL**
 5. **AdmitKit** Template
+
+
+## Instalasi
