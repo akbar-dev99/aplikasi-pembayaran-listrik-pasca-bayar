@@ -1,3 +1,3 @@
-## Aplikasi Pembayaran Listrik Pasca-Bayar
+## Aplikasi Pembayaran Listrik Pasca-Bayar Menggunakan CodeIgniter 3
 
 
