@@ -1,7 +1,8 @@
 <nav id="sidebar" class="sidebar js-sidebar">
 	<div class="sidebar-content js-simplebar">
 		<a class="sidebar-brand" href="index.html">
-			<span class="align-middle">AdminKit</span>
+			<span class="align-middle">Listrikku
+			</span>
 			<br>
 			<span class="text-white-50" style="font-size: 18px;">Pelanggan</span>
 		</a>
