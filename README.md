@@ -9,7 +9,7 @@
 
 1. **Javascript**
 2. **PHP** dengan framework **CodeIgniter 3 (3.1.13)**
-3. Basis data **MySQL**
+3. **MySQL**
 5. **AdmitKit** Template
 
 
