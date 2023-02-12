@@ -6,7 +6,7 @@
         <h3><strong><?= $title ?></strong></h3>
       </div>
       <div class="col-auto ms-auto text-end mt-n1 gap-4 ">
-        <!-- <a href="#" class="btn btn-light bg-white me-2">Invite a Friend</a> -->
+        <a href="<?= base_url("pelanggan/tagihan") ?>" class="btn btn-primary  me-2">Kembali Ke Halaman Tagihan</a>
       </div>
     </div>
     <div class="row">
