@@ -20,8 +20,9 @@ class DashboardAdmin extends CI_Controller
     // Ambil data jumlah semua tagihan
     $data['count_biils'] = $this->M_dashboard->count_bills_last_month();
     $data['count_cs'] = $this->M_dashboard->count_customers();
-
-
+    $data['latest_cs'] = $this->M_dashboard->get_latest_customers();
+    $data['latest_bills'] = $this->M_dashboard->get_lastest_tagihan();
+    $data["usage_grafik"] = $this->M_dashboard->get_grafik_penggunaan_pelanggan();
     $data["scripts"] = ['admin/_script/sc_dashboard'];
     $this->load->view('layouts/head', $data);
     $this->load->view('layouts/sidebar_admin', $data);

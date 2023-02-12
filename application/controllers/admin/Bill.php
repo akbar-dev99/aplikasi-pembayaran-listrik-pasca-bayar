@@ -12,6 +12,7 @@ class Bill extends CI_Controller
   {
     $data["title"] = "Data Tagihan";
     $data['bills'] = $this->M_bill->get_all_tagihan();
+
     $data['user_auth'] = get_logged_in_user();
 
     $this->load->view('layouts/head', $data);
