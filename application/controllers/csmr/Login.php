@@ -26,13 +26,18 @@ class Login extends CI_Controller
     $this->form_validation->set_rules('username', 'Username', 'trim|required');
     $this->form_validation->set_rules('password', 'Password', 'trim|required');
 
+
+    // Mengambil data dari form
+    $username = $this->input->post('username');
+    $password = $this->input->post('password');
+
     // Mendefinisikan data untuk diteruskan pada saat ada error validasi
     $validation_err = array(
-      'username' => $this->input->post('username'),
-      'password' => $this->input->post('password'),
+      'username' => $username,
+      'password' => $password,
     );
 
-    // Mengecek apakah form validasi sudah benar
+    // Mengecek apakah form validasi sudah benar & menampilkan halaman login
     if ($this->form_validation->run() == FALSE) {
       $this->session->set_flashdata('validation_err', $validation_err);
       // Menyimpan data error validasi pada session
@@ -44,13 +49,8 @@ class Login extends CI_Controller
       $this->load->view('v_login', $data);
       $this->load->view('layouts/auth/end', $data);
     } else {
-      // Mengambil data dari form
-      $username = $this->input->post('username');
-      $password = $this->input->post('password');
-
       // Mencari data customer berdasarkan username
       $customer = $this->M_customer->get_customer_by_username($username);
-
       // Mengecek apakah customer tersebut ada
       if ($customer) {
         // Mengecek apakah password yang diinput sesuai dengan password pelanggan
@@ -88,6 +88,7 @@ class Login extends CI_Controller
 
   public function logout()
   {
+    $this->session->set_flashdata('message_success', 'Logout berhasil, sampai jumpa lagi!');
     $this->session->sess_destroy();
     redirect('pelanggan/masuk');
   }
