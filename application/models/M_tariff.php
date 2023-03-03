@@ -1,10 +1,14 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
-
-
-
-defined('BASEPATH') or exit('No direct script access allowed');
-
+/**
+ * Class TariffModel
+ *
+ * @description Model untuk manajemen data tarif
+ *
+ * @package     Models
+ * @subpackage  TariffModel
+ * @category    Model
+ */
 class M_tariff extends CI_Model
 {
   public function create_tariff($data)

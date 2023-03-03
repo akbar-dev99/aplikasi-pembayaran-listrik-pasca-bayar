@@ -1,11 +1,20 @@
 <?php
+
+/**
+ * Class UserModel
+ *
+ * @description Model untuk manajemen data user / administrasi
+ *
+ * @package     Models
+ * @subpackage  UserModel
+ * @category    Model
+ */
 class M_user extends CI_Model
 {
 
   public function __construct()
   {
     parent::__construct();
-    $this->load->database();
   }
 
   public function get_all_user()

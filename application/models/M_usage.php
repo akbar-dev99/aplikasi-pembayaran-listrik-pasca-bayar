@@ -1,4 +1,14 @@
 <?php
+
+/**
+ * Class UsageModel
+ *
+ * @description Model untuk manajemen data penggunaan listrik
+ *
+ * @package     Models
+ * @subpackage  UsageModel
+ * @category    Model
+ */
 class M_usage extends CI_Model
 {
   public function get_all_penggunaan($where = NULL)
@@ -24,6 +34,16 @@ class M_usage extends CI_Model
     return $query->row();
   }
 
+  public function get_penggunaan_pelanggan($id_cs)
+  {
+    $this->db->select('penggunaan.*, pelanggan.nama_pelanggan, tarif.daya');
+    $this->db->from('penggunaan USE INDEX (idx_penggunaan_pelanggan)');
+    $this->db->join('pelanggan', 'penggunaan.id_pelanggan = pelanggan.id_pelanggan');
+    $this->db->join('tarif', 'pelanggan.id_tarif = tarif.id_tarif');
+    $this->db->where('penggunaan.id_pelanggan', $id_cs);
+    $this->db->order_by("id_penggunaan", "ASC");
+    return $this->db->get()->result();
+  }
 
   public function get_penggunaan_by_period($id_cus, $m, $yr)
   {
@@ -77,6 +97,7 @@ class M_usage extends CI_Model
   public function insert_penggunaan($data)
   {
     $this->db->insert('penggunaan', $data);
+    // $this-db->insert
 
     // // cek apakah data penggunaan sudah ada untuk pelanggan tertentu pada bulan dan tahun yang sama
     // $query = $this->db->get_where('penggunaan', array('id_pelanggan' => $id_cus, 'bulan' => $m, 'tahun' => $yr));

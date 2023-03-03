@@ -1,6 +1,16 @@
 <!--  -->
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
+
+/**
+ * Class DashboardModel
+ *
+ * @description Model untuk manajemen data untuk dashboard
+ *
+ * @package     Models
+ * @subpackage  DashboardModel
+ * @category    Model
+ */
 class M_dashboard extends CI_Model
 {
   public function recap_pembayaran()
@@ -156,10 +166,3 @@ class M_dashboard extends CI_Model
     }
   }
 }
-
-/*
-// $query = $this->db->query("SELECT bulan,tahun, SUM(meter_akhir - meter_awal) AS total_pemakaian
-    //                               FROM penggunaan
-    //                               GROUP BY bulan,tahun");
-
-*/
