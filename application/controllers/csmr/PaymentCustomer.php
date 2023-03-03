@@ -2,6 +2,16 @@
 
 defined('BASEPATH') or exit('No direct script access allowed');
 
+/**
+ * Class PaymentCustomer
+ *
+ * @description Controller untuk halaman pembayaran pelanggan
+ *
+ * @package     Customer Controller
+ * @subpackage  PaymentCustomer
+ * @category    Controller
+ */
+
 class PaymentCustomer extends CI_Controller
 {
 

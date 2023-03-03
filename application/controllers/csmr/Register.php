@@ -1,6 +1,16 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
+
+/**
+ * Class Register
+ *
+ * Class ini digunakan untuk mengatur fitur pendaftaran pelanggan baru
+ *
+ * @package     Customer Controller
+ * @subpackage  Register
+ * @category    Controller
+ */
 class Register extends CI_Controller
 {
 
@@ -42,8 +52,9 @@ class Register extends CI_Controller
       'required' => 'Konfirmasi ulang kata sandi anda! ',
       'matches' => ' Kata sandi tidak sama !',
     ]);
-    $this->form_validation->set_rules('nomor_kwh', 'Nomor kwh', 'required', [
-      'required' => 'Masukan nomor kwh! ',
+    $this->form_validation->set_rules('nomor_kwh', 'Nomor KWH', 'required|integer', [
+      'required' => 'Masukan nomor kwh!',
+      'integer' => "Nomor KWH harus berisi angka saja"
     ]);
     $this->form_validation->set_rules('alamat', 'alamat', 'required', [
       'required' => 'Alamat harus diisi! ',
@@ -61,7 +72,7 @@ class Register extends CI_Controller
         'nama' => $this->input->post('nama'),
         'username' => $this->input->post('username'),
         'password' => $this->input->post('password'),
-        'nomor_kwh' => $this->input->post('nomor_kwh'),
+        'nomor_kwh' => $this->input->post('nomor_kwh'), // menambahkan nomor kwh
         'alamat' => $this->input->post('alamat'),
         'id_tarif' => $this->input->post('id_tarif'),
       );

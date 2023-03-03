@@ -1,5 +1,16 @@
 <?php
 
+
+/**
+ * Class Bill
+ *
+ * @description Controller untuk halaman dan mengatur fitur tagihan listrik
+ *
+ * @package     Admin Controller
+ * @subpackage  Bill
+ * @category    Controller
+ */
+
 class Bill extends CI_Controller
 {
 
@@ -8,6 +19,7 @@ class Bill extends CI_Controller
     parent::__construct();
     is_user_login();
   }
+
   public function index()
   {
     $data["title"] = "Data Tagihan";

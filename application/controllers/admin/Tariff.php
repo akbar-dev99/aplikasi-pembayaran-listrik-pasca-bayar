@@ -1,6 +1,14 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
-
+/**
+ * Class Tariff
+ *
+ * @description Controller untuk halaman dan mengatur fitur profile pelanggan
+ *
+ * @package     Admin Controller
+ * @subpackage  Tariff
+ * @category    Controller
+ */
 class Tariff extends CI_Controller
 {
 

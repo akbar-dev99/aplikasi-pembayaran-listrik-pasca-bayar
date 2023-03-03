@@ -1,6 +1,16 @@
 <?php
+
 defined('BASEPATH') or exit('No direct script access allowed');
 
+/**
+ * Class Dashboard Admin
+ *
+ * @description Controller untuk halaman dan mengatur fitur pelanggan
+ *
+ * @package     Admin Controller
+ * @subpackage  Dashboard Admin
+ * @category    Controller
+ */
 class DashboardAdmin extends CI_Controller
 {
 
@@ -12,6 +22,7 @@ class DashboardAdmin extends CI_Controller
 
   public function index()
   {
+
     $data['user_auth'] = get_logged_in_user();
     $data["title"] = "Dashboard";
     $data["payment_recap"] = $this->M_dashboard->recap_pembayaran();

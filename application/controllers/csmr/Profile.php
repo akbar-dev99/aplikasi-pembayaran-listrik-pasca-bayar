@@ -2,6 +2,15 @@
 
 defined('BASEPATH') or exit('No direct script access allowed');
 
+/**
+ * Class ProfileCustomer
+ *
+ * @description Controller untuk halaman dan mengatur fitur profile pelanggan
+ *
+ * @package     Customer Controller
+ * @subpackage  ProfileCustomer
+ * @category    Controller
+ */
 class Profile extends CI_Controller
 {
 
@@ -13,7 +22,6 @@ class Profile extends CI_Controller
 
   public function index()
   {
-
     $user_auth = get_logged_in_customer();
     $data["title"] = "Profil";
     $data['user_auth'] = $user_auth;

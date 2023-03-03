@@ -1,4 +1,14 @@
 <?php
+
+/**
+ * Class BillCustomer
+ *
+ * @description Controller untuk halaman dan mengatur fitur tagihan pelanggan
+ *
+ * @package     Customer Controller
+ * @subpackage  BillCustomer
+ * @category    Controller
+ */
 class BillCustomer extends CI_Controller
 {
 
@@ -7,6 +17,7 @@ class BillCustomer extends CI_Controller
     parent::__construct();
     is_customer_login();
   }
+
 
   public function index()
   {

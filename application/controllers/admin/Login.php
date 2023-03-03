@@ -1,6 +1,16 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
+
+/**
+ * Class Login
+ *
+ * @description Controller untuk halaman login user / admin
+ *
+ * @package     Admin Controller
+ * @subpackage  Login
+ * @category    Controller
+ */
 class Login extends CI_Controller
 {
 

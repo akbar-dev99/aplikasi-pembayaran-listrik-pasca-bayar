@@ -1,5 +1,14 @@
 <?php
 
+/**
+ * Class ProfileAdmin
+ *
+ * @description Controller untuk halaman dan mengatur fitur profile administrasi
+ *
+ * @package     Admin Controller
+ * @subpackage  ProfileAdmin
+ * @category    Controller
+ */
 class ProfileAdmin extends CI_Controller
 {
   public function __construct()

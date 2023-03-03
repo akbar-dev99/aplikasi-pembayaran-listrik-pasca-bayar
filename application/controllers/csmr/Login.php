@@ -1,15 +1,27 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
-
+/**
+ * Class Login Customer
+ *
+ * @description Controller untuk halaman login pelanggan
+ *
+ * @package     Customer Controller
+ * @subpackage  Login Customer
+ * @category    Controller
+ */
 class Login extends CI_Controller
 {
+  /**
+   * @description Login constructor.
+   */
   public function __construct()
   {
     parent::__construct();
-    $this->load->model('M_customer');
   }
 
-
+  /**
+   * @description Menampilkan halaman login pelanggan
+   */
   public function index()
   {
     $data["title"] = "Masuk";
@@ -20,6 +32,9 @@ class Login extends CI_Controller
   }
 
 
+  /**
+   * @description Menyimpan data login dan melakukan validasi
+   */
   public function create()
   {
     // Menetapkan aturan validasi untuk form
@@ -86,6 +101,9 @@ class Login extends CI_Controller
     }
   }
 
+  /**
+   * @description Melakukan logout dan menghapus session pelanggan
+   */
   public function logout()
   {
     $this->session->set_flashdata('message_success', 'Logout berhasil, sampai jumpa lagi!');

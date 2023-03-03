@@ -1,4 +1,15 @@
 <?php
+
+
+/**
+ * Class Login
+ *
+ * @description Controller untuk halaman dan mengatur fitur penggunaan listrik pelanggan
+ *
+ * @package     Customer Controller
+ * @subpackage  Login
+ * @category    Controller
+ */
 class UsageCustomer extends CI_Controller
 {
 
@@ -13,7 +24,7 @@ class UsageCustomer extends CI_Controller
     $user_auth = get_logged_in_customer();
     $data["title"] = "Data Penggunaan";
     $data['user_auth'] = $user_auth;
-    $data['usages'] = $this->M_usage->get_all_penggunaan(["penggunaan.id_pelanggan" => $user_auth->id_pelanggan]);
+    $data['usages'] = $this->M_usage->get_penggunaan_pelanggan($user_auth->id_pelanggan);
 
     $this->load->view('layouts/head', $data);
     $this->load->view('layouts/sidebar', $data);
@@ -45,7 +56,7 @@ class UsageCustomer extends CI_Controller
     //konversikan tgl saat ini ke bulan and tahun
     $month = date("m", strtotime($current_date));
     $year = date("Y", strtotime($current_date));
-
+    // var_dump($month);
     // cek apakah data penggunaan sudah ada untuk pelanggan tertentu pada bulan dan tahun yang sama
     $check_usage_by_period = $this->M_usage->check_period_penggunaan($customer->id_pelanggan, $month, $year);
 
@@ -72,14 +83,16 @@ class UsageCustomer extends CI_Controller
     // mengambil data penggunaan pelanggan yang telah ada, kemudian di filter untuk mendapat data yang tidak sesuai dengan periode input saat ini.
     $count_cs_usage = array_filter($this->M_usage->get_all_penggunaan(["penggunaan.id_pelanggan" => $customer->id_pelanggan]), fn ($val) => ($val->bulan != intval($month) || $val->tahun != $year));
 
-    $post_init_meter = $init_meter;
+    $post_init_meter = $this->input->post("meter_awal");
+    $post_last_meter = $this->input->post("meter_akhir");
+    // $post_last_meter =
     // statement dibawah ini berfungsi untuk mengecek apakah input penggunaan kali merupakan inputan penggunaan yang pertaman kali, jika ya maka meter_awal di ambil dari form input. jika tidak maka meter_awal ditentukan oleh meter_akhir dari data varibael $check_usage_by_period;
     if ($init_meter > 0) {
+
       if (count($count_cs_usage) > 0) {
         $data["lock_init_meter"] = TRUE;
         $post_init_meter = $init_meter;
       } else {
-        $post_init_meter = $this->input->post('meter_awal');
         $this->form_validation->set_rules('meter_awal', 'Meter Awal', 'required|numeric',  [
           'required' => 'Meter Awal Tidak Boleh Kosong!',
           'numeric' => 'Meter Awal harus berupa angka!',
@@ -91,8 +104,8 @@ class UsageCustomer extends CI_Controller
     $form_values = [
       'bulan' => MonthToString($month),
       'tahun' => $year,
-      'meter_awal' => $init_meter,
-      'meter_akhir' => $this->input->post('meter_akhir'),
+      'meter_awal' => $post_init_meter,
+      'meter_akhir' => $post_last_meter,
     ];
 
     if ($this->form_validation->run() === false) {
@@ -104,8 +117,8 @@ class UsageCustomer extends CI_Controller
       $this->load->view('layouts/footer', $data);
       $this->load->view('layouts/end', $data);
     } else {
-      $last_meter = $this->input->post("meter_akhir");
-      if ($last_meter <= $post_init_meter) {
+
+      if ($post_last_meter <= $post_init_meter) {
         $this->session->set_flashdata('form_values', $form_values);
         $this->session->set_flashdata('message_error', 'Meter akhir tidak mungkin kurang dari meter awal');
         redirect(base_url('pelanggan/penggunaan/input'));
@@ -115,8 +128,10 @@ class UsageCustomer extends CI_Controller
       if (!$check_usage_by_period) {
         // Jika tidak, akan di input sebagai data penggunaan baru
         $new_usage_data = [
-          "meter_akhir" => $last_meter,
+          "meter_akhir" => $post_last_meter,
           "meter_awal" => $post_init_meter,
+          // "bulan" => date("m", strtotime(date('Y-m-d') . " -1 month")),
+          // "tahun" => date("Y", strtotime(date('Y-m-d') . " -1 month")),
           "bulan" => $month,
           "tahun" => $year,
           "id_pelanggan" => $customer->id_pelanggan
@@ -127,9 +142,11 @@ class UsageCustomer extends CI_Controller
         $new_usage_data["id_penggunaan"] = $new_id_usage;
 
         // menyimpan data penggunaan
-        $result = $this->M_usage->insert_penggunaan($new_usage_data);
+        $this->M_usage->insert_penggunaan($new_usage_data);
+
+        /* Kode berikut merupakan insert data kedalam tabel tagihan, bersamaan dengan insert data pelanggan. akan tetapi di beri komentar karena telah dibuat SQL Trigger untuk insert data tagihan saat query insert penggunaan.
         // hitung jumlah meter dan array data tagihan
-        $total_meter = $last_meter - $post_init_meter;
+        $total_meter = $post_last_meter - $post_init_meter;
         $data_bill = array(
           'id_tagihan' => get_auto_number("tagihan", "id_tagihan", "TG" . date("ymd"), 12),
           'id_penggunaan' => $new_id_usage,
@@ -139,9 +156,8 @@ class UsageCustomer extends CI_Controller
           'jumlah_meter' => $total_meter,
           'status' => "UNPAID"
         );
-
         $this->M_bill->insert_tagihan($data_bill);
-
+        */
         $this->session->set_flashdata('message_success', 'Berhasil menambah penggunaan dan tagihan');
         redirect(base_url('pelanggan/penggunaan'));
       } else {
@@ -152,8 +168,9 @@ class UsageCustomer extends CI_Controller
           $this->session->set_flashdata('message_warning', 'Penggunaan anda untuk periode bulan ini telah dibuatkan tagihan dan sudah lunas. Untuk penginputan data penggunaan dapat dilakukan bulan depan. Terima kasih');
           redirect(base_url('pelanggan/penggunaan'));
         } else {
-          $total_meter = $last_meter - $get_usage_by_period_data->meter_awal;
-          $this->M_usage->update_penggunaan($get_usage_by_period_data->id_penggunaan, ["meter_akhir" => $last_meter]);
+          $total_meter = $post_last_meter - $post_init_meter;
+          $this->M_usage->update_penggunaan($get_usage_by_period_data->id_penggunaan, ["meter_akhir" => $post_last_meter, "meter_awal" => $post_init_meter]);
+          // update data tagihan
           $this->M_bill->update_tagihan(["id_tagihan" => $get_bill->id_tagihan], ["jumlah_meter" => $total_meter]);
           $this->session->set_flashdata('message_success', 'Berhasil memperbaharui data penggunaan anda.');
           redirect(base_url('pelanggan/penggunaan'));

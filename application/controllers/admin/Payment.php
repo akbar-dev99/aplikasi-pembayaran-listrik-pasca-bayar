@@ -2,6 +2,16 @@
 
 defined('BASEPATH') or exit('No direct script access allowed');
 
+
+/**
+ * Class Payment
+ *
+ * @description Controller untuk halaman pembayaran
+ *
+ * @package     Admin Controller
+ * @subpackage  Payment
+ * @category    Controller
+ */
 class Payment extends CI_Controller
 {
 
@@ -45,6 +55,8 @@ class Payment extends CI_Controller
       $data["admin_fee"] = Rupiah($admin_fee);
       $data["total_pay"] = Rupiah($total_pay);
       $data["total_pay_num"] = $total_pay;
+
+      // Validasi apakah tagihan yang ingin dibayar telah lunas atau belum, jika telah lunas maka pembayaran di batalkan karena telah lunas
       if ($bill->status === 'PAID') {
         $this->session->set_flashdata('message_error', 'Tagihan ' . $id . '</strong>. telah lunas');
         redirect(base_url('administrator/tagihan'));
@@ -55,6 +67,7 @@ class Payment extends CI_Controller
     $current_year = date("Y");
     $bill_month = $bill->bulan;
     $bill_year = $bill->tahun;
+
 
     $pay_blocked = $current_year > $bill_year || ($current_year == $bill_year && $current_month > $bill_month);
 
@@ -69,8 +82,6 @@ class Payment extends CI_Controller
     $data["bill"] = $bill;
     $data["req_id"] = $id;
     $data["curr_date"] = date("Y-m-d");
-    // var_dump();
-    // Ambil data user dari sesi login
     $id_user = $this->session->userdata('id_user');
 
     $this->form_validation->set_rules('tanggal_bayar', 'Tanggal Bayar', 'required');
@@ -105,6 +116,9 @@ class Payment extends CI_Controller
         redirect('administrator/pembayaran/t/' . $id);
       }
 
+      //Memulai transaksi
+      $this->db->trans_start();
+      // proses data pembayaran
       $data_pay = [
         'id_pembayaran' => get_auto_number("pembayaran", "id_pembayaran", "PAY" . date("ymd"), 12),
         'id_pelanggan' => $bill->id_pelanggan,
@@ -114,12 +128,22 @@ class Payment extends CI_Controller
         'tgl_bayar' => $form_values["tanggal_bayar"],
         "biaya_admin" => $admin_fee,
       ];
-
+      // insert data pembayaran
       $this->M_payment->insert_pembayaran($data_pay);
+      // update data status tagihan
       $this->M_bill->update_tagihan_status_by_id($bill->id_tagihan, "PAID");
-
-      $this->session->set_flashdata('message_success', 'Pembayaran berhasil disimpan');
-      redirect('administrator/pembayaran');
+      //Menyelesaikan transaksi
+      $this->db->trans_complete();
+      //Mengecek apakah transaksi berhasil atau gagal
+      if ($this->db->trans_status() === FALSE) {
+        //Jika transaksi gagal, melakukan rollback
+        $this->session->set_flashdata('message_error', 'Pembayaran Gagal');
+        redirect('administrator/pembayaran');
+      } else {
+        //Jika transaksi berhasil, melakukan commit
+        $this->session->set_flashdata('message_success', 'Pembayaran berhasil disimpan');
+        redirect('administrator/pembayaran');
+      }
     }
   }
 }

@@ -1,5 +1,15 @@
 <?php
 
+
+/**
+ * Class User
+ *
+ * @description Controller untuk halaman dan mengatur fitur user
+ *
+ * @package     Admin Controller
+ * @subpackage  User
+ * @category    Controller
+ */
 class User extends CI_Controller
 {
   public function __construct()

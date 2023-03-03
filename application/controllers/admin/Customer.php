@@ -2,6 +2,15 @@
 
 defined('BASEPATH') or exit('No direct script access allowed');
 
+/**
+ * Class Customer
+ *
+ * @description Controller untuk halaman dan mengatur fitur pelanggan
+ *
+ * @package     Admin Controller
+ * @subpackage  Customer
+ * @category    Controller
+ */
 class Customer extends CI_Controller
 {
 
@@ -16,7 +25,15 @@ class Customer extends CI_Controller
   {
     $data['user_auth'] = get_logged_in_user();
     $data["title"] = "Pelanggan";
+    // memulai benchmark
+    // $this->benchmark->mark('code_start');
+    // method atau fungsi yang akan diukur kinerjanya, yaitu berupa
     $data['customers'] = $this->M_customer->get_customers();
+    // mengakhiri benchmark
+    // $this->benchmark->mark('code_end');
+    // $elapsed_time = $this->benchmark->elapsed_time('code_start', 'code_end');
+    // menampilkan waktu eksekusi dan memory yang digunakan
+    // echo json_encode(BenchmarkInfo($elapsed_time, "Query mengambil data pelanggan"));
     $this->load->view('layouts/head', $data);
     $this->load->view('layouts/sidebar_admin', $data);
     $this->load->view('layouts/header_admin', $data);

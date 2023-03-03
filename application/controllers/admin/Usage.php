@@ -1,4 +1,14 @@
 <?php
+
+/**
+ * Class Penggunaan
+ *
+ * @description Controller untuk halaman dan mengatur fitur penggunaan listrik
+ *
+ * @package     Admin Controller
+ * @subpackage  Penggunaan
+ * @category    Controller
+ */
 class Usage extends CI_Controller
 {
 
