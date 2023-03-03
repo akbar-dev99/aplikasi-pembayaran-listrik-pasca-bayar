@@ -1,5 +1,20 @@
 <?php
 
+/**
+ * Helper GetAutoNumber
+ *
+ * @description Helper untuk generate auto number pada sebuah kolom tabel pada database
+ *
+ * @package     Helper
+ * @subpackage  GetAutoNumber
+ * @category    Helpers
+ * @param string $table nama table
+ * @param string $field
+ * @param string $field
+ * @param int $length
+ * @param string $where
+ * @return string
+ */
 function get_auto_number($table, $field, $pref, $length, $where = "")
 {
   $ci = &get_instance();
