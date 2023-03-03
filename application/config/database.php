@@ -76,14 +76,14 @@ $query_builder = true;
 $db['default'] = array(
     'dsn' => '',
     'hostname' => 'localhost',
-    'username' => 'root',
-    'password' => 'root',
-    'database' => 'db_listrikku',
+    'username' => 'ci3',
+    'password' => 'cq@FnabzjrvZviv@',
+    'database' => 'ci3_listrik',
     'dbdriver' => 'mysqli',
     'dbprefix' => '',
     'pconnect' => false,
     'db_debug' => (ENVIRONMENT !== 'production'),
-    'cache_on' => false,
+    'cache_on' => TRUE,
     'cachedir' => '',
     'char_set' => 'utf8',
     'dbcollat' => 'utf8_general_ci',
@@ -94,3 +94,6 @@ $db['default'] = array(
     'failover' => array(),
     'save_queries' => true,
 );
+
+$db['default']['cache_on'] = TRUE;
+$db['default']['cachedir'] = APPPATH . 'cache/db/';
