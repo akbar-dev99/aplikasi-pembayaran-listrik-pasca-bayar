@@ -4,8 +4,8 @@
 
 - **PHP** v8.1+
 - **MYSQL** v15.1
+- **Web Server** Apache/Nginx
 
-<br>
 
 ## Teknologi Yang Dipakai
 
@@ -14,7 +14,7 @@
 3. **MySQL**
 5. **AdmitKit** Template
 
-<br>
+
 
 ## Instalasi
 
@@ -45,13 +45,14 @@ $db['default'] = array(
 
 <br>
 
-## Contoh Login Untuk Admin dan Member
+## Contoh Login Untuk Admin dan Pelanggan
 
 ```
 # Admin
 ID : ADM000
 pw : superadmin
-# Pelanggan 1
+
+# Pelanggan
 username : unit
 pw : 1234
 username: test
