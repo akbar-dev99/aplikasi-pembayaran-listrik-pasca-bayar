@@ -137,7 +137,7 @@ class UsageCustomer extends CI_Controller
           "id_pelanggan" => $customer->id_pelanggan
         ];
         // Generate id penggunaan untuk inputan saat ini.
-        $new_id_usage = get_auto_number("penggunaan", "id_penggunaan", "PN" . date("ymd"), 11);
+        $new_id_usage = GetAutoNumber("penggunaan", "id_penggunaan", "PN" . date("ymd"), 11);
         // tambahkan id penggunaan dan id pelanggan di kedalam array penggunaan baru;
         $new_usage_data["id_penggunaan"] = $new_id_usage;
 
@@ -148,7 +148,7 @@ class UsageCustomer extends CI_Controller
         // hitung jumlah meter dan array data tagihan
         $total_meter = $post_last_meter - $post_init_meter;
         $data_bill = array(
-          'id_tagihan' => get_auto_number("tagihan", "id_tagihan", "TG" . date("ymd"), 12),
+          'id_tagihan' => GetAutoNumber("tagihan", "id_tagihan", "TG" . date("ymd"), 12),
           'id_penggunaan' => $new_id_usage,
           'id_pelanggan' => $customer->id_pelanggan,
           "bulan" => $month,

@@ -43,7 +43,7 @@ class Tariff extends CI_Controller
       $this->index();
     } else {
       $data = array(
-        'id_tarif' => get_auto_number("tarif", "id_tarif", "TRF", 14),
+        'id_tarif' => GetAutoNumber("tarif", "id_tarif", "TRF", 14),
         'daya' => $this->input->post('daya'),
         'tarif_perkwh' => $this->input->post('tarif_perkwh')
       );

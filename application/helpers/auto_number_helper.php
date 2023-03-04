@@ -15,7 +15,7 @@
  * @param string $where
  * @return string
  */
-function get_auto_number($table, $field, $pref, $length, $where = "")
+function GetAutoNumber($table, $field, $pref, $length, $where = "")
 {
   $ci = &get_instance();
 

@@ -51,8 +51,8 @@ class Customer extends CI_Controller
     $this->form_validation->set_rules('id_tarif', 'ID Tarif', 'required');
 
 
-    //  dapatkan ID pelanggan dengan menggunakan fungsi get_auto_number
-    $csmr_id  = get_auto_number("pelanggan", "id_pelanggan", "PLG" . date("ymd"), 13);
+    //  dapatkan ID pelanggan dengan menggunakan fungsi GetAutoNumber
+    $csmr_id  = GetAutoNumber("pelanggan", "id_pelanggan", "PLG" . date("ymd"), 13);
     $data_post = array(
       "id_pelanggan" => $csmr_id,
       'username' => $this->input->post('username'),

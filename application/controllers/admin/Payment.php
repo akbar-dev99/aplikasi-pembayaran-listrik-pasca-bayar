@@ -76,8 +76,6 @@ class Payment extends CI_Controller
       redirect(base_url('administrator/tagihan'));
     }
 
-
-
     $data["error"] = $error_notfound;
     $data["bill"] = $bill;
     $data["req_id"] = $id;
@@ -120,7 +118,7 @@ class Payment extends CI_Controller
       $this->db->trans_start();
       // proses data pembayaran
       $data_pay = [
-        'id_pembayaran' => get_auto_number("pembayaran", "id_pembayaran", "PAY" . date("ymd"), 12),
+        'id_pembayaran' => GetAutoNumber("pembayaran", "id_pembayaran", "PAY" . date("ymd"), 12),
         'id_pelanggan' => $bill->id_pelanggan,
         'id_tagihan' => $bill->id_tagihan,
         'total_bayar' => $form_values['total_bayar'],

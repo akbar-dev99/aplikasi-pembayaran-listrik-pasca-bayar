@@ -19,11 +19,9 @@ class Dashboard extends CI_Controller
         is_customer_login();
     }
 
-
     public function index()
     {
         $user_auth = get_logged_in_customer();
-
         $current_date = date("Y-m-d");
         $month = date("m", strtotime($current_date));
         $year = date("Y", strtotime($current_date));

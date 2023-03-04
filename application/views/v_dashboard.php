@@ -46,7 +46,6 @@
 									<?php else : ?>
 										<h1 class="mt-1 mb-3 text-truncate " data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Rp. 0">Rp. 0</h1>
 									<?php endif; ?>
-
 									<div class="mb-0">
 										<span class="text-muted">Tahun ini</span>
 									</div>
@@ -115,10 +114,13 @@
 											</div>
 										</div>
 									</div>
-									<h1 class="mt-1 mb-3"><?= $arrears ?></h1>
+									<?php if ($sum_bill) : ?>
+										<h1 class="mt-1 mb-3 text-truncate " data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="<?= Rupiah($sum_bill) ?>"><?= Rupiah($sum_bill) ?></h1>
+									<?php else : ?>
+										<h1 class="mt-1 mb-3 text-truncate " data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Rp. 0">Rp. 0</h1>
+									<?php endif; ?>
 									<div class="mb-0">
-										<!-- <span class="text-danger"> <i class="mdi mdi-arrow-bottom-right"></i> -2.25% </span> -->
-										<span class="text-muted">Semua</span>
+										<span class="text-muted">Dari <?= $arrears ?> tagihan</span>
 									</div>
 								</div>
 							</div>

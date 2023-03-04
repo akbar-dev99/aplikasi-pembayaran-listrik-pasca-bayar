@@ -82,8 +82,8 @@ class Register extends CI_Controller
       $this->load->view('layouts/auth/end', $data);
     } else {
       // Jika form validation berhasil, dapatkan ID pelanggan
-      // dengan menggunakan fungsi get_auto_number
-      $csmr_id  = get_auto_number("pelanggan", "id_pelanggan", "PLG" . date("ymd"), 13);
+      // dengan menggunakan fungsi GetAutoNumber
+      $csmr_id  = GetAutoNumber("pelanggan", "id_pelanggan", "PLG" . date("ymd"), 13);
       $data = array(
         "id_pelanggan" => $csmr_id,
         'nama_pelanggan' => $this->input->post('nama'),

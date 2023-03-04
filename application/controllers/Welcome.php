@@ -21,6 +21,11 @@ class Welcome extends CI_Controller
 	 */
 	public function index()
 	{
-		$this->load->view('welcome_message');
+		// redirect to /pelanggan/masuk
+		redirect("pelanggan");
+		// please for each
 	}
 }
+
+
+// xdebug_info();

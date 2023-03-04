@@ -60,8 +60,8 @@ class User extends CI_Controller
       $this->load->view('layouts/end', $data);
     } else {
 
-      //  dapatkan ID User dengan menggunakan fungsi get_auto_number
-      $new_id_user  = get_auto_number("user", "id_user", "USR", 7);
+      //  dapatkan ID User dengan menggunakan fungsi GetAutoNumber
+      $new_id_user  = GetAutoNumber("user", "id_user", "USR", 7);
       $data_post = array(
         "id_user" => $new_id_user,
         'username' => strtolower($form_values['username']),
