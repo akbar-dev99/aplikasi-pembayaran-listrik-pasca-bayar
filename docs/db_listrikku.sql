@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.0
+-- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Waktu pembuatan: 11 Feb 2023 pada 12.09
--- Versi server: 10.9.4-MariaDB
--- Versi PHP: 7.4.30
+-- Waktu pembuatan: 26 Feb 2023 pada 13.21
+-- Versi server: 10.10.3-MariaDB
+-- Versi PHP: 8.1.16
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -62,6 +62,7 @@ CREATE TABLE `pelanggan` (
 
 INSERT INTO `pelanggan` (`id_pelanggan`, `nama_pelanggan`, `username`, `password`, `nomor_kwh`, `alamat`, `id_tarif`) VALUES
 ('PLG2209010001', 'unit zero', 'unit.zero', '$2y$10$tPA60JV0Obr6nBktdQ98AOXorcKWIOdYP17Qw5xJFzUCq1IIv.JiC', '00000000000', 'Jln 000', 'TRF20230205002'),
+('PLG2209120003', 'Manjaro', 'Manjaro', '$2y$10$Sk5hTXYQtGtBrvs0JfLx0u65HhYh1HZ.kmY58f41/PGzEqZpDXdKi', '888888888', 'Jln XCFE', 'TRF20230205007'),
 ('PLG2210060004', 'pax', 'pax', '$2y$10$pMLeth.kT9ISPrmDWQZAFu/qwFlwGvrW3K5jxEZeyCEm.758DkASO', '0251823230800', 'Bandung', 'TRF20230205009'),
 ('PLG2210100001', 'KKKKKKK', 'kkkkkkk', '$2y$10$uBS4h11n2oE5CYAA7czaoOWD7gS1n2m8lKO..Myi8N75B0Rt4PPeW', '025180150800', 'JL. KKK RT.22/RW.22', 'TRF20230205009'),
 ('PLG2302040001', 'yo this unit', '__unitttt', '$2y$10$VUJ7BuaGNnL1uXWK4P/VSesof2HNc2uaaIlNzEbutH6CIlp9Wtl0O', '9000', 'Jl. Antara no 48', 'TRF20230205007'),
@@ -71,7 +72,10 @@ INSERT INTO `pelanggan` (`id_pelanggan`, `nama_pelanggan`, `username`, `password
 ('PLG2302060002', 'pelanggan 123', 'plgn123', '$2y$10$a1ervVeNULyzB.eZto2byeXlSXpW91T5rDWmmoUeDkMGeUiena0ye', '025180150800', 'Bekasi Raya', 'TRF20230205007'),
 ('PLG2302080001', 'collector', 'collector', '$2y$10$gQJ97faAnqsXbO2zUDrTIONmE3wDSD2793bEphEfF9kymg/UvCL6i', '94849368435', 'Jatiwaringin', 'TRF20230205007'),
 ('PLG2302080002', 'LOL', 'lol555', '$2y$10$kP/t5Bma05iehnEmA/A56uXRT1VuJGszN08D0IuGCPdlM4e5eRpeq', '3593480249', 'Finding....', 'TRF20230205009'),
-('PLG2302090001', 'test', 'test', '$2y$10$fdgKijKfdKND.USAjNBFfegbKmKquwKiVkLIjUL1v2VcqthfC0eKe', '9248937520', 'Test Alamat', 'TRF20230205009');
+('PLG2302090001', 'test', 'test', '$2y$10$fdgKijKfdKND.USAjNBFfegbKmKquwKiVkLIjUL1v2VcqthfC0eKe', '9248937520', 'Test Alamat', 'TRF20230205010'),
+('PLG2302120001', 'unit5', 'unit5', '$2y$10$bp.z54chxPVRrCJYAlIoyOJrGIsgYfUBq4.NvGA/VtfrmJfMVk21q', '02803132932', 'Distrik 996', 'TRF20230205009'),
+('PLG2302120002', 'unit6', 'unit6', '$2y$10$kup0pc210G0HJzXXgqnsPuTEQVY2E6b4RMMVJDBUZv3l.kotMgRTC', '09302981031', 'Distrik 996', 'TRF20230205002'),
+('PLG2302120003', 'unit15', 'unit15', '$2y$10$W11GRU2CXccfUyTynfDqH.sjIeC9tdoy4mhAMT5alinFjl5vneRoO', '151515155115', 'Distrik 996', 'TRF20230205007');
 
 -- --------------------------------------------------------
 
@@ -101,7 +105,11 @@ INSERT INTO `pembayaran` (`id_pembayaran`, `id_tagihan`, `id_pelanggan`, `tgl_ba
 ('PAY230210005', 'TG2302100005', 'PLG2210100001', '2023-01-01', 2500, 242500, 'USR0001'),
 ('PAY230211001', 'TG2302100006', 'PLG2210100001', '2023-02-01', 2500, 302500, 'USR0001'),
 ('PAY230211002', 'TG2302110001', 'PLG2209010001', '2023-02-01', 2500, 152500, 'USR0001'),
-('PAY230211003', 'TG2302110002', 'PLG2302080001', '2023-02-01', 2500, 102500, 'USR0001');
+('PAY230211003', 'TG2302110002', 'PLG2302080001', '2023-02-01', 2500, 102500, 'USR0001'),
+('PAY230212001', 'TG2302120001', 'PLG2210060004', '2023-02-01', 2500, 252500, 'ADM0000'),
+('PAY230212002', 'TG2302120002', 'PLG2210060004', '2023-01-29', 2500, 552500, 'ADM0000'),
+('PAY230212003', 'TG2302120003', 'PLG2210060004', '2023-02-04', 2500, 232500, 'ADM0000'),
+('PAY230212004', 'TG2302120004', 'PLG2210060004', '2023-02-05', 2500, 252500, 'ADM0000');
 
 -- --------------------------------------------------------
 
@@ -125,14 +133,21 @@ CREATE TABLE `penggunaan` (
 INSERT INTO `penggunaan` (`id_penggunaan`, `id_pelanggan`, `bulan`, `tahun`, `meter_awal`, `meter_akhir`) VALUES
 ('PN220101002', 'PLG2302080001', 1, 2023, 0, 100),
 ('PN220910005', 'PLG2210100001', 9, 2022, 0, 100),
+('PN221012001', 'PLG2210060004', 10, 2022, 0, 125),
 ('PN221016005', 'PLG2210100001', 10, 2022, 100, 230),
+('PN221101001', 'PLG2210060004', 11, 2022, 125, 400),
+('PN221201001', 'PLG2210060004', 12, 2022, 400, 515),
+('PN230101001', 'PLG2210060004', 1, 2023, 515, 640),
 ('PN230210002', 'PLG2302040001', 1, 2023, 200, 300),
 ('PN230210003', 'PLG2302090001', 1, 2023, 0, 100),
 ('PN230210004', 'PLG2302040001', 2, 2023, 300, 400),
 ('PN230210005', 'PLG2210100001', 12, 2022, 230, 350),
 ('PN230210006', 'PLG2210100001', 1, 2023, 350, 500),
 ('PN230211001', 'PLG2209010001', 1, 2023, 0, 100),
-('PN230211002', 'PLG2302080001', 2, 2023, 100, 210);
+('PN230211002', 'PLG2302080001', 2, 2023, 100, 210),
+('PN230211003', 'PLG2210100001', 2, 2023, 500, 700),
+('PN230211004', 'PLG2302090001', 2, 2023, 100, 300),
+('PN230212001', 'PLG2210060004', 2, 2023, 640, 800);
 
 -- --------------------------------------------------------
 
@@ -164,7 +179,14 @@ INSERT INTO `tagihan` (`id_tagihan`, `id_penggunaan`, `id_pelanggan`, `bulan`, `
 ('TG2302100006', 'PN230210006', 'PLG2210100001', 1, 2023, 150, 'PAID'),
 ('TG2302110001', 'PN230211001', 'PLG2209010001', 1, 2023, 100, 'PAID'),
 ('TG2302110002', 'PN220101002', 'PLG2302080001', 1, 2023, 100, 'PAID'),
-('TG2302110003', 'PN230211002', 'PLG2302080001', 2, 2023, 110, 'UNPAID');
+('TG2302110003', 'PN230211002', 'PLG2302080001', 2, 2023, 110, 'UNPAID'),
+('TG2302110004', 'PN230211003', 'PLG2210100001', 2, 2023, 200, 'UNPAID'),
+('TG2302110005', 'PN230211004', 'PLG2302090001', 2, 2023, 200, 'UNPAID'),
+('TG2302120001', 'PN221012001', 'PLG2210060004', 10, 2022, 125, 'PAID'),
+('TG2302120002', 'PN221101001', 'PLG2210060004', 11, 2022, 275, 'PAID'),
+('TG2302120003', 'PN221201001', 'PLG2210060004', 12, 2022, 115, 'PAID'),
+('TG2302120004', 'PN230101001', 'PLG2210060004', 1, 2023, 125, 'PAID'),
+('TG2302120005', 'PN230212001', 'PLG2210060004', 2, 2023, 160, 'UNPAID');
 
 -- --------------------------------------------------------
 
@@ -186,7 +208,7 @@ INSERT INTO `tarif` (`id_tarif`, `daya`, `tarif_perkwh`) VALUES
 ('TRF20230205002', '900VA', 1500),
 ('TRF20230205007', '450VA', 1000),
 ('TRF20230205009', '1500VA', 2000),
-('TRF20230205010', '1300VA', 1500);
+('TRF20230205010', '1300VA', 2700);
 
 -- --------------------------------------------------------
 
