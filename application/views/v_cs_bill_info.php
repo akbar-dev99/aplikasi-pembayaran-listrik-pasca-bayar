@@ -19,6 +19,9 @@
       <?php } else { ?>
 
         <?php if ($bill) : ?>
+          <div class="col-md-12">
+            <?php $this->load->view('layouts/flashdata'); ?>
+          </div>
           <div class="col-md-6">
             <div class="card">
               <div class="card-header  pt-4 pb-0 ">
@@ -83,6 +86,8 @@
                     </td>
                     <td> <?php if ($bill->status === "PAID") { ?>
                         <h5 class=" text-success fw-bolder     ">Lunas</h5>
+                      <?php } elseif ($bill->status === "PROCESSED") { ?>
+                        <h5 class=" text-warning fw-bolder     ">Diproses</h5>
                       <?php } else { ?>
                         <h5 class=" text-danger fw-bolder  ">Belum Lunas</h5>
                       <?php } ?>
@@ -99,6 +104,12 @@
                     </tr>
                   </tfoot>
                 </table>
+              </div>
+              <div class="card-footer pt-0 pb-4 d-grid gap-3 ">
+                <?php if ($show_pay_button) : ?>
+                  <a href="<?= base_url('pelanggan/tagihan/' . $bill->id_tagihan . "/bayar") ?>" class="btn btn-primary px-4 py-2 ">Buat Pembayaran</a>
+                  <a href="<?= base_url("administrator/tagihan") ?>" class="btn btn-link">Kembali</a>
+                <?php endif; ?>
               </div>
             </div>
           </div>

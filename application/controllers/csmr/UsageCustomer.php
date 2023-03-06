@@ -50,13 +50,12 @@ class UsageCustomer extends CI_Controller
     ]);
 
     $data["customer"] = $customer;
-
     //mengambil tgl saat ini dengan fungsi date
     $current_date = date("Y-m-d");
     //konversikan tgl saat ini ke bulan and tahun
     $month = date("m", strtotime($current_date));
     $year = date("Y", strtotime($current_date));
-    // var_dump($month);
+
     // cek apakah data penggunaan sudah ada untuk pelanggan tertentu pada bulan dan tahun yang sama
     $check_usage_by_period = $this->M_usage->check_period_penggunaan($customer->id_pelanggan, $month, $year);
 
@@ -101,6 +100,7 @@ class UsageCustomer extends CI_Controller
     }
 
 
+
     $form_values = [
       'bulan' => MonthToString($month),
       'tahun' => $year,
@@ -130,10 +130,10 @@ class UsageCustomer extends CI_Controller
         $new_usage_data = [
           "meter_akhir" => $post_last_meter,
           "meter_awal" => $post_init_meter,
-          // "bulan" => date("m", strtotime(date('Y-m-d') . " -1 month")),
-          // "tahun" => date("Y", strtotime(date('Y-m-d') . " -1 month")),
-          "bulan" => $month,
-          "tahun" => $year,
+          "bulan" => date("m", strtotime(date('Y-m-d') . " -1 month")),
+          "tahun" => date("Y", strtotime(date('Y-m-d') . " -1 month")),
+          // "bulan" => $month,
+          // "tahun" => $year,
           "id_pelanggan" => $customer->id_pelanggan
         ];
         // Generate id penggunaan untuk inputan saat ini.

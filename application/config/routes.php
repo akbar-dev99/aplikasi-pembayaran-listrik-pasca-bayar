@@ -68,6 +68,7 @@ $route['pelanggan/penggunaan/hapus/(:any)'] = 'csmr/UsageCustomer/delete/$1';
 
 $route['pelanggan/tagihan'] = 'csmr/BillCustomer';
 $route['pelanggan/tagihan/(:any)'] = 'csmr/BillCustomer/detail/$1';
+$route['pelanggan/tagihan/(:any)/bayar'] = 'csmr/PaymentCustomer/create/$1';
 
 $route['pelanggan/pembayaran'] = 'csmr/PaymentCustomer';
 
@@ -105,6 +106,12 @@ $route['administrator/tagihan/(:any)'] = 'admin/Bill/detail/$1';
 
 $route['administrator/pembayaran/t/(:any)'] = 'admin/Payment/create/$1';
 $route['administrator/pembayaran'] = 'admin/Payment';
+
+// $route['test/tariff'] = 'test/TariffTest/test_get_tarif';
+// $route['test/pelanggan/tariff'] = 'test/CustomerTest/getCustomerTariff';
+// $route['test/pelanggan'] = 'test/CustomerTest/test_get_customer';
+// $route['test/pelanggan/nokwh'] = 'test/CustomerTest/test_customer_by_no_kwh';
+
 
 $route['akses/block'] = 'Util/block';
 $route['404_override'] = 'Custom404/index404';

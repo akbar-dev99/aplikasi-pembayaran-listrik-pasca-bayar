@@ -38,6 +38,8 @@
                         <div>
                           <?php if ($b->status === "PAID") { ?>
                             <span class=" badge bg-success rounded-0 px-3 py-2   ">Lunas</span>
+                          <?php } elseif ($b->status === "PROCESSED") { ?>
+                            <span class=" badge bg-warning rounded-0 px-3 py-2   ">Diproses</span>
                           <?php } else { ?>
                             <span class=" badge rounded-0 bg-danger px-3 py-2">Belum Lunas</span>
                           <?php } ?>
