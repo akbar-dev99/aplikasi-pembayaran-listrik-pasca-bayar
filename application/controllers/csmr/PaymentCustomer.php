@@ -49,7 +49,7 @@ class PaymentCustomer extends CI_Controller
     $error_notfound = TRUE;
     if ($bill) {
       $error_notfound = FALSE;
-      $data["title"] = "Konfirmasi Pembayaran : " . $bill->id_tagihan;
+      $data["title"] = "Pembayaran : " . $bill->id_tagihan;
       $total_bill = $bill->tarif_perkwh * $bill->jumlah_meter;
       $total_pay = $total_bill + $admin_fee;
       $data["total_bill"] = Rupiah($total_bill);

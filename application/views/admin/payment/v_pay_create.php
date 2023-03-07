@@ -39,7 +39,7 @@ if ($this->session->flashdata('form_values')) {
           <?php $this->load->view('layouts/flashdata'); ?>
           <div class="card">
             <div class="card-body">
-              <form action="<?= base_url('administrator/pembayaran/t/' . $bill->id_tagihan) ?>" method="post">
+              <form action="<?= base_url('administrator/tagihan/' . $bill->id_tagihan . '/pembayaran') ?>" method="post">
                 <!-- <div class="row mb-3">
                   <div class="col-sm-6">
                     <div class="form-group ">

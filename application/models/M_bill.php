@@ -88,6 +88,7 @@ class M_bill extends CI_Model
    */
   public function get_tagihan_by_id($id)
   {
+    // ini dilakukan karena tidak mungkin menuliskan setiap field dari tabel tagihan secara manual dalam select statement
     $this->db->select('*');
     $this->db->from('tagihan');
     $this->db->join('penggunaan', 'penggunaan.id_penggunaan = tagihan.id_penggunaan');

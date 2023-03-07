@@ -102,9 +102,9 @@ $route['administrator/penggunaan/hapus/(:any)'] = 'admin/Usage/delete/$1';
 
 $route['administrator/tagihan'] = 'admin/Bill/index';
 $route['administrator/tagihan/(:any)'] = 'admin/Bill/detail/$1';
-
-
-$route['administrator/pembayaran/t/(:any)'] = 'admin/Payment/create/$1';
+$route['administrator/tagihan/(:any)/pembayaran'] = 'admin/Payment/create/$1';
+$route['administrator/pembayaran/konfirmasi'] = 'admin/Payment/confirm';
+$route['administrator/pembayaran/tolak'] = 'admin/Payment/reject';
 $route['administrator/pembayaran'] = 'admin/Payment';
 
 // $route['test/tariff'] = 'test/TariffTest/test_get_tarif';

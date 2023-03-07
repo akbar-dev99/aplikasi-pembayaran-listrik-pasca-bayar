@@ -44,7 +44,7 @@ class Payment extends CI_Controller
     $data["title"] = "Konfirmasi Pembayaran : -";
     $data['user_auth'] = get_logged_in_user();
     $admin_fee = AdminFee();
-
+    $redirect_back = 'administrator/tagihan/' . $id . '/bayar';
     $error_notfound = TRUE;
     if ($bill) {
       $error_notfound = FALSE;
@@ -59,7 +59,12 @@ class Payment extends CI_Controller
       // Validasi apakah tagihan yang ingin dibayar telah lunas atau belum, jika telah lunas maka pembayaran di batalkan karena telah lunas
       if ($bill->status === 'PAID') {
         $this->session->set_flashdata('message_error', 'Tagihan ' . $id . '</strong>. telah lunas');
-        redirect(base_url('administrator/tagihan'));
+        redirect('administrator/tagihan/' . $id);
+      }
+
+      if ($bill->status === 'PROCESSED') {
+        $this->session->set_flashdata('message_info', 'Tagihan ' . $id . '</strong>. sedang menunggu konfirmasi pembayaran');
+        redirect('administrator/tagihan/' . $id);
       }
     }
 
@@ -73,7 +78,7 @@ class Payment extends CI_Controller
 
     if ($pay_blocked === false) {
       $this->session->set_flashdata('message_error', 'Pembayaran untuk tagihan <strong>' . $id . '</strong> dapat di lakukan bulan depan!');
-      redirect(base_url('administrator/tagihan'));
+      redirect('administrator/tagihan/' . $id);
     }
 
     $data["error"] = $error_notfound;
@@ -106,12 +111,12 @@ class Payment extends CI_Controller
 
       if ($this->input->post('total_bayar') < $total_pay) {
         $this->session->set_flashdata('message_error', 'Jumlah pembayaran kurang dari total pembayaran!');
-        redirect('administrator/pembayaran/t/' . $id);
+        redirect($redirect_back);
       }
 
       if ($this->input->post('total_bayar') > $total_pay) {
         $this->session->set_flashdata('message_error', 'Jumlah pembayaran lebih dari pembayaran!');
-        redirect('administrator/pembayaran/t/' . $id);
+        redirect($redirect_back);
       }
 
       //Memulai transaksi
@@ -141,6 +146,91 @@ class Payment extends CI_Controller
         //Jika transaksi berhasil, melakukan commit
         $this->session->set_flashdata('message_success', 'Pembayaran berhasil disimpan');
         redirect('administrator/pembayaran');
+      }
+    }
+  }
+
+
+  public function confirm()
+  {
+
+    $this->form_validation->set_rules('id_tagihan', 'ID Tagihan', 'required');
+
+    $bill_id = $this->input->post("id_tagihan");
+    $user_id = $this->session->userdata('id_user');
+
+    $redirect_back = 'administrator/tagihan/' . $bill_id;
+
+    if ($this->form_validation->run() == false) {
+      $this->session->set_flashdata('message_error', 'Konfirmasi pembayaran gagal, tidak dapat menemukan ID tagihan');
+      redirect($redirect_back);
+    } else {
+      $exist_payment = $this->M_payment->get_pembayaran_by_id_tagihan($bill_id);
+      if (empty($exist_payment)) {
+        // $this->session->set_flashdata('message_info', 'Tagihan ' . $id . '</strong>.');
+        $this->session->set_flashdata('message_error', 'Konfirmasi pembayaran gagal, pastikan apakah tagihan <strong>' . $bill_id . '</strong> telah melakukan pembayaran atau belum');
+        redirect($redirect_back);
+      }
+
+
+      $this->db->trans_start();
+      // proses data pembayaran untuk diupdate
+      $data_pay = [
+        'id_user' => $user_id,
+      ];
+      // update data pembayaran
+      $this->M_payment->update_pembayaran(["id_pembayaran" => $exist_payment->id_pembayaran], $data_pay);
+      // update data status tagihan
+      $this->M_bill->update_tagihan_status_by_id($exist_payment->id_tagihan, "PAID");
+      $this->db->trans_complete();
+
+      if ($this->db->trans_status() === FALSE) {
+        //Jika transaksi gagal, melakukan rollback
+        $this->session->set_flashdata('message_error', 'Konfirmasi Pembayaran Gagal');
+        redirect($redirect_back);
+      } else {
+        //Jika transaksi berhasil, melakukan commit
+        $this->session->set_flashdata('message_success', 'Konfirmasi pembayaran berhasil');
+        redirect($redirect_back);
+      }
+    }
+  }
+
+  public function reject()
+  {
+
+    $this->form_validation->set_rules('id_tagihan', 'ID Tagihan', 'required');
+
+    $bill_id = $this->input->post("id_tagihan");
+
+    $redirect_back = 'administrator/tagihan/' . $bill_id;
+
+    if ($this->form_validation->run() == false) {
+      $this->session->set_flashdata('message_error', 'Penolakan pembayaran gagal, tidak dapat menemukan ID tagihan');
+      redirect($redirect_back);
+    } else {
+      $exist_payment = $this->M_payment->get_pembayaran_by_id_tagihan($bill_id);
+      if (empty($exist_payment)) {
+        // $this->session->set_flashdata('message_info', 'Tagihan ' . $id . '</strong>.');
+        $this->session->set_flashdata('message_error', 'Penolakan pembayaran gagal, pastikan apakah tagihan <strong>' . $bill_id . '</strong> telah melakukan pembayaran atau belum');
+        redirect($redirect_back);
+      }
+
+
+      $this->db->trans_start();
+      // insert data pembayaran
+      $this->M_payment->delete_pembayaran($exist_payment->id_pembayaran);
+      // update data status tagihan
+      $this->M_bill->update_tagihan_status_by_id($bill_id, "UNPAID");
+      $this->db->trans_complete();
+      if ($this->db->trans_status() === FALSE) {
+        //Jika transaksi gagal, melakukan rollback
+        $this->session->set_flashdata('message_error', 'Penolakan Pembayaran Gagal');
+        redirect($redirect_back);
+      } else {
+        //Jika transaksi berhasil, melakukan commit
+        $this->session->set_flashdata('message_warning', 'Penolakan pembayaran berhasil');
+        redirect($redirect_back);
       }
     }
   }

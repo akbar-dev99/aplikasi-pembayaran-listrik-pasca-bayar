@@ -28,6 +28,18 @@ class M_payment extends CI_Model
     return $query->result();
   }
 
+
+  public function get_pembayaran_by_id_tagihan($id_bill)
+  {
+    $this->db->cache_on(); // aktifkan caching
+    $this->db->select("*");
+    $this->db->from('pembayaran');
+    $this->db->join('tagihan', 'tagihan.id_tagihan = pembayaran.id_tagihan', "left");
+    $this->db->where('pembayaran.id_tagihan', $id_bill);
+    $query = $this->db->get();
+    return $query->row();
+  }
+
   // public function get_pembayaran($where = null)
   // {
   //   $this->db->select('pembayaran.*, tagihan.*, pelanggan.*, user.*');
@@ -65,6 +77,19 @@ class M_payment extends CI_Model
     return $result['jumlah_meter'];
   }
 
+
+  public function update_pembayaran($where, $data)
+  {
+    $this->db->where($where);
+    $this->db->update('pembayaran', $data);
+  }
+
+
+  public function delete_pembayaran($pay_id)
+  {
+    $this->db->where('id_pembayaran', $pay_id);
+    $this->db->delete('pembayaran');
+  }
 
   public function insert_pembayaran($data)
   {

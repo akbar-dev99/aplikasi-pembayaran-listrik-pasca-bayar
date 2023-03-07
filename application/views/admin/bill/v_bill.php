@@ -24,15 +24,21 @@
                     <th class=" text-nowrap ">Jumlah Meter</th>
                     <th>Jumlah Bayar</th>
                     <th>Status</th>
-
                   </tr>
                 </thead>
                 <tbody>
                   <?php foreach ($bills as $b) : ?>
+                    <?php
+
+                    $status_color = "primary";
+                    if ($b->status === "PROCESSED") {
+                      $status_color = "warning";
+                    }
+                    ?>
                     <tr>
                       <td class="text-nowrap">
                         <div class="d-flex gap-2  ">
-                          <a href="<?php echo site_url('administrator/tagihan/' . $b->id_tagihan) ?>" class="btn btn-primary btn-sm d-flex align-items-center gap-2  "> <i class="btn-icon-prepend" data-feather="info"></i> Detail</a>
+                          <a href="<?php echo site_url('administrator/tagihan/' . $b->id_tagihan) ?>" class="btn btn-<?= $status_color ?> btn-sm d-flex align-items-center gap-2  "> <i class="btn-icon-prepend" data-feather="info"></i> Detail</a>
                         </div>
                       </td>
                       <td><?= $b->id_tagihan; ?></td>
@@ -48,6 +54,8 @@
                         <div>
                           <?php if ($b->status === "PAID") { ?>
                             <span class=" badge bg-success rounded-0 px-3 py-2   ">Lunas</span>
+                          <?php } elseif ($b->status === "PROCESSED") { ?>
+                            <span class=" badge bg-warning rounded-0 px-3 py-2   ">Menunggu Konfirmasi</span>
                           <?php } else { ?>
                             <span class=" badge rounded-0 bg-danger px-3 py-2">Belum Lunas</span>
                           <?php } ?>

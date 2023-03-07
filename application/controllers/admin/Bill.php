@@ -55,11 +55,6 @@ class Bill extends CI_Controller
       $data["total_bill"] = Rupiah($total_bill);
       $data["admin_fee"] = Rupiah($admin_fee);
       $data["total_pay"] = Rupiah($total_pay);
-      if ($bill->status === 'UNPAID') {
-        $data['show_pay_button'] = true;
-      } else {
-        $data['show_pay_button'] = false;
-      }
     }
 
     $data["error"] = $error_notfound;
