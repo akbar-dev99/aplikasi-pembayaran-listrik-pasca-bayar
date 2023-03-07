@@ -4,6 +4,7 @@ function is_customer_login()
   $CI = &get_instance();
   $is_login = $CI->session->has_userdata("logged_in", TRUE);
   if (!$is_login) {
+    $CI->session->set_flashdata('message_error', 'Silahkan login terlebih dahulu!');
     redirect('pelanggan/masuk');
   }
 
