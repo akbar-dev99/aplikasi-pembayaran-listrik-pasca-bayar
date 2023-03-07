@@ -107,7 +107,7 @@
               </div>
               <div class="card-footer pt-0 pb-4 d-grid gap-3 ">
                 <?php if ($show_pay_button) : ?>
-                  <a href="<?= base_url('pelanggan/tagihan/' . $bill->id_tagihan . "/bayar") ?>" class="btn btn-primary px-4 py-2 ">Buat Pembayaran</a>
+                  <a href="<?= base_url('pelanggan/tagihan/' . $bill->id_tagihan . "/bayar") ?>" class="btn btn-primary px-4 py-2 ">Bayar Sekarang</a>
                   <a href="<?= base_url("administrator/tagihan") ?>" class="btn btn-link">Kembali</a>
                 <?php endif; ?>
               </div>

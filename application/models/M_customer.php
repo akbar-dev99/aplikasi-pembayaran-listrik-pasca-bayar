@@ -42,6 +42,24 @@ class M_customer extends CI_Model
 
     return $query->row();
   }
+
+  /**
+   * @description Mengambil data pelanggan berdasarkan nomor kwh
+   *
+   * @param string $no_kwh nomor kwh untuk data pelanggan yang diinginkan
+   * @return object Data pelanggan yang diinginkan
+   */
+  public function get_pelanggan_by_nomor_kwh($no_kwh)
+  {
+    $this->db->select('*');
+    $this->db->from('pelanggan');
+    $this->db->join('tarif', 'tarif.id_tarif = pelanggan.id_tarif');
+    $this->db->where(array('nomor_kwh' => $no_kwh));
+    $query = $this->db->get();
+    return $query->row();
+  }
+
+
   /**
    * @description Menambahkan data pelanggan ke dalam tabel "pelanggan"
    *
@@ -71,11 +89,14 @@ class M_customer extends CI_Model
    *
    * @return array Data seluruh pelanggan beserta tarif listrik yang terdaftar dalam tabel "pelanggan" dan "tarif"
    */
-  public function get_customers()
+  public function get_customers($where = NULL)
   {
     $this->db->select('*');
     $this->db->from('pelanggan');
     $this->db->join('tarif', 'tarif.id_tarif = pelanggan.id_tarif');
+    if (!empty($where)) {
+      $this->db->where($where);
+    }
     return $this->db->get()->result();
   }
 
