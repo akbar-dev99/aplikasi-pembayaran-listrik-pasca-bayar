@@ -38,3 +38,6 @@ cliff*
 composer.json
 .phpdoc
 docs/api
+
+
+changelog.sh
