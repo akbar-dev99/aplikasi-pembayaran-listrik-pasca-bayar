@@ -38,13 +38,19 @@ class Login extends CI_Controller
   public function create()
   {
     // Menetapkan aturan validasi untuk form
-    $this->form_validation->set_rules('username', 'Username', 'trim|required');
-    $this->form_validation->set_rules('password', 'Password', 'trim|required');
-
+    $this->form_validation->set_rules('username', 'Username', 'trim|required|min_length[3]|max_length[20]|alpha_dash');
+    $this->form_validation->set_rules('password', 'Password', 'trim|required|min_length[3]|max_length[20]|alpha_numeric');
 
     // Mengambil data dari form
-    $username = $this->input->post('username');
-    $password = $this->input->post('password');
+    $username = $this->input->post('username', TRUE); // filter input dengan fungsi xss_clean
+    $password = $this->input->post('password', TRUE); // filter input dengan fungsi xss_clean
+
+    // Menambahkan pesan error yang jelas ketika validasi gagal atau terjadi kesalahan login, dan menampilkan pesan tersebut pada halaman login.
+    $this->form_validation->set_message('required', '{field} harus diisi');
+    $this->form_validation->set_message('min_length', '{field} minimal {param} karakter');
+    $this->form_validation->set_message('max_length', '{field} maksimal {param} karakter');
+    $this->form_validation->set_message('alpha_dash', '{field} hanya boleh berisi huruf, angka, underscore, atau dash');
+    $this->form_validation->set_message('alpha_numeric', '{field} hanya boleh berisi huruf atau angka');
 
     // Mendefinisikan data untuk diteruskan pada saat ada error validasi
     $validation_err = array(
@@ -54,7 +60,6 @@ class Login extends CI_Controller
 
     // Mengecek apakah form validasi sudah benar & menampilkan halaman login
     if ($this->form_validation->run() == FALSE) {
-      $this->session->set_flashdata('validation_err', $validation_err);
       // Menyimpan data error validasi pada session
       $this->session->set_flashdata('validation_err', $validation_err);
 
