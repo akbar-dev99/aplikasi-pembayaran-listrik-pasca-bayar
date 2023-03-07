@@ -52,7 +52,7 @@ function AdminFee($format = "number")
 {
 
   if ($format === "rupiah") {
-    return Rupiah(2000);
+    return Rupiah(2500);
   } else {
     return 2500;
   }
@@ -98,4 +98,23 @@ function BenchmarkInfo($elapsed_time = NULL, $msg = "Query Name")
 function MemoryUsage()
 {
   return (!function_exists('memory_get_usage')) ? '0' : round(memory_get_usage() / 1024 / 1024, 2) . 'MB';
+}
+
+
+function ParseQueryString()
+{
+  // Ambil query string dari $_SERVER['QUERY_STRING']
+  $query_string = $_SERVER['QUERY_STRING'];
+
+  // Buat array kosong untuk menampung pasangan key-value
+  $params = array();
+
+  // Jika query string tidak kosong
+  if (!empty($query_string)) {
+    // Parse query string menggunakan parse_str() dan simpan hasilnya di $params
+    parse_str($query_string, $params);
+  }
+
+  // Return objek dari $params menggunakan (object)
+  return (object) $params;
 }
